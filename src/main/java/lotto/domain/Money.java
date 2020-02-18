@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import java.util.List;
+
 public class Money {
 
     private static final int LOTTO_PRICE = 1000;
@@ -13,8 +15,8 @@ public class Money {
     public static Money of(int money){
         return new Money(money);
     }
-    public static Money of(LottoStore lottoStore){
-        return new Money(lottoStore.lottoCount()*LOTTO_PRICE);
+    public static Money of(List<Lotto> lottos){
+        return new Money(lottos.size()*LOTTO_PRICE);
     }
 
     public int lottoCount(){
