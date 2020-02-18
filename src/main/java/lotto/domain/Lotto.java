@@ -1,5 +1,7 @@
 package lotto.domain;
 
+import lotto.domain.type.ResultType;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,11 +23,12 @@ public class Lotto {
                 .collect(Collectors.toList());
         return new Lotto(numbers);
     }
-    public int matchCount(Lotto winningLotto){
-        return (int) this.numbers
-                .stream()
-                .filter(winningLotto::contains)
-                .count();
+    public ResultType findResultTypeByMatchCount(Lotto winningLotto){
+        final int matchCount = (int) this.numbers
+                            .stream()
+                            .filter(winningLotto::contains)
+                            .count();
+        return ResultType.findType(matchCount);
     }
     private boolean contains(Integer number){
         return this.numbers.contains(number);

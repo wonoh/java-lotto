@@ -21,8 +21,7 @@ public class LottoStore {
     public Results createResults(WinningLotto winningLotto){
         Results results = Results.of(this);
         for (Lotto lotto : this.lottos) {
-            int matchCount = lotto.matchCount(winningLotto.lotto());
-            ResultType resultType = ResultType.findType(matchCount);
+            ResultType resultType = lotto.findResultTypeByMatchCount(winningLotto.lotto());
             resultType.plusLottoMatchCount();
         }
         return results;
