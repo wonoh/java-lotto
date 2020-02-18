@@ -17,11 +17,9 @@ public class Results {
     }
 
     private void initResults() {
-        results.add(Result.of(ResultType.THREE));
-        results.add(Result.of(ResultType.FOUR));
-        results.add(Result.of(ResultType.FIVE));
-        results.add(Result.of(ResultType.SIX));
-        results.add(Result.of(ResultType.SORRY));
+        for (ResultType resultType: ResultType.values()){
+            results.add(Result.of(resultType));
+        }
     }
 
     public List<Result> getResults() {
@@ -34,7 +32,7 @@ public class Results {
             winningMoney += result.getPrize();
         }
         Money earnMoney = Money.of(winningMoney);
-        Money lottoMoney = Money.of(lottoStore);
+        Money lottoMoney = Money.of(lottoStore.getLottos());
         return lottoMoney.yield(earnMoney);
     }
     public static Results of(LottoStore lottoStore){
