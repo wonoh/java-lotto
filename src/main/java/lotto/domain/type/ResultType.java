@@ -4,21 +4,19 @@ import java.util.Arrays;
 
 public enum ResultType {
 
-    SIX(6,"6개 일치 (2000000000원)",2000000000),
-    FIVE(5,"5개 일치 (1500000원)",1500000),
-    FOUR(4,"4개 일치 (50000원)",50000),
-    THREE(3,"3개 일치 (5000원)",5000),
-    SORRY(0,"꽝",0);
+    SIX(6,2000000000),
+    FIVE(5,500000),
+    FOUR(4,50000),
+    THREE(3,5000),
+    SORRY(0,0);
 
     private int matchCount;
-    private String message;
     private int winningMoney;
 
     private int lottoMatchCount;
 
-    ResultType(int matchCount,String message, int winningMoney) {
+    ResultType(int matchCount,int winningMoney) {
         this.matchCount = matchCount;
-        this.message = message;
         this.winningMoney = winningMoney;
     }
     public int prize(){
@@ -42,8 +40,11 @@ public enum ResultType {
         this.lottoMatchCount++;
     }
 
-    public String getMessage() {
-        return message;
+    public int getMatchCount() {
+        return matchCount;
     }
 
+    public int getWinningMoney() {
+        return winningMoney;
+    }
 }

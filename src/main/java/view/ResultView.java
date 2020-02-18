@@ -21,8 +21,10 @@ public class ResultView {
         StringBuilder resultBuilder = new StringBuilder();
         resultBuilder.append("당첨 통계\n"+"------"+"\n");
         for (Result result : results.getResults()) {
-            resultBuilder.append(result.getResultType().getMessage())
-                    .append(" - ")
+            resultBuilder.append(result.getResultType().getMatchCount())
+                    .append("개 일치 (")
+                    .append(result.getResultType().getWinningMoney())
+                    .append(") - ")
                     .append(result.getResultType().getLottoMatchCount())
                     .append("개\n");
         }
