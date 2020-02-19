@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,11 @@ public class LottoGenerator {
     private static final int PICK_START_INDEX = 30;
     private static final int PICK_END_INDEX = 36;
 
+    private static List<Integer> lottoNumberPoll;
+    static{
+        lottoNumberPoll = initNumbers();
+    }
+
     public static LottoStore generateLottoStore(Money money){
         List<Lotto> lottoNumbers = IntStream.range(0, money.lottoCount())
                                     .mapToObj(i -> generateLotto())
@@ -19,9 +25,9 @@ public class LottoGenerator {
         return LottoStore.of(lottoNumbers);
     }
     private static Lotto generateLotto(){
-        List<Integer> initNumbers = initNumbers();
-        Collections.shuffle(initNumbers);
-        final List<Integer> lottoNumbers = pickLottoNumbers(initNumbers);
+        final List<Integer> newNumbers = new ArrayList<>(lottoNumberPoll);
+        Collections.shuffle(newNumbers);
+        final List<Integer> lottoNumbers = pickLottoNumbers(newNumbers);
         Collections.sort(lottoNumbers);
         return Lotto.of(lottoNumbers);
     }
