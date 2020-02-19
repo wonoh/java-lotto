@@ -19,7 +19,7 @@ public class Lotto {
     }
     public static Lotto of(String inputNumbers){
         List<Integer> numbers = Arrays.stream(inputNumbers.split(COMMA))
-                .map(s -> Integer.parseInt(s.trim()))
+                .map(inputNumber -> Integer.parseInt(inputNumber.trim()))
                 .collect(Collectors.toList());
         return new Lotto(numbers);
     }
