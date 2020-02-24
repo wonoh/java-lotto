@@ -9,7 +9,10 @@ public class Main {
         LottoStore lottoStore = LottoGenerator.generateLottoStore(money);
         ResultView.printLotto(lottoStore);
 
-        WinningLotto winningLotto = WinningLotto.of(InputView.inputWinningLotto());
+        WinningLotto winningLotto = WinningLotto.of(
+                InputView.inputWinningLotto(),
+                InputView.inputBonusNumber()
+        );
         Results results = lottoStore.createResults(winningLotto);
         ResultView.printResults(results);
     }
