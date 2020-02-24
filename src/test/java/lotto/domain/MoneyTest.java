@@ -25,7 +25,7 @@ class MoneyTest {
     void Money_of(String inputNumbers) {
         Lotto lotto = Lotto.of(inputNumbers);
         LottoStore lottoStore = LottoStore.of(Collections.singletonList(lotto));
-        Money money = Money.of(lottoStore);
+        Money money = Money.of(lottoStore.getLottos());
         assertNotNull(money);
         assertEquals(1000,money.getMoney());
         assertEquals(1,money.lottoCount());
