@@ -1,7 +1,6 @@
 package lotto.domain.type;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -9,6 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -40,5 +40,13 @@ class ResultTypeTest {
                 .orElse(ResultType.SORRY);
         assertNotNull(resultType);
     }
+    @DisplayName("5개,보너스볼이 일치하면 FIVE_AND_BONUS 를 반환한다.")
+    @ParameterizedTest
+    @ValueSource(ints = {4})
+    void 보너스볼_일치(int matchCount){
+        final ResultType type = ResultType.findType(matchCount, true);
+        assertEquals(ResultType.FIVE_AND_BONUS,type);
+    }
+
 
 }
