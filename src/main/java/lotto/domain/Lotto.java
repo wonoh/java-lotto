@@ -23,14 +23,15 @@ public class Lotto {
                 .collect(Collectors.toList());
         return new Lotto(numbers);
     }
-    public ResultType findResultTypeByMatchCount(Lotto winningLotto){
+    public ResultType findResultTypeByMatchCount(Lotto winningLotto,Integer bonusNumber){
         final int matchCount = (int) this.numbers
                             .stream()
                             .filter(winningLotto::contains)
                             .count();
-        return ResultType.findType(matchCount);
+        final boolean isBonusMatch = contains(bonusNumber);
+        return ResultType.findType(matchCount,isBonusMatch);
     }
-    private boolean contains(Integer number){
+    public boolean contains(Integer number){
         return this.numbers.contains(number);
     }
 
