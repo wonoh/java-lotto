@@ -4,6 +4,7 @@ import lotto.domain.Lotto;
 import lotto.domain.LottoStore;
 import lotto.domain.Result;
 import lotto.domain.Results;
+import lotto.domain.type.ResultType;
 
 import java.util.List;
 
@@ -21,11 +22,16 @@ public class ResultView {
         StringBuilder resultBuilder = new StringBuilder();
         resultBuilder.append("당첨 통계\n"+"------"+"\n");
         for (Result result : results.getResults()) {
-            resultBuilder.append(result.getResultType().getMatchCount())
-                    .append("개 일치 (")
-                    .append(result.getResultType().getWinningMoney())
+            final ResultType resultType = result.getResultType();
+            resultBuilder.append(resultType.getMatchCount())
+                    .append("개 일치");
+            if(resultType.equals(ResultType.FIVE_AND_BONUS)){
+                resultBuilder.append(", 보너스볼 일치");
+            }
+            resultBuilder.append("(")
+                    .append(resultType.getWinningMoney())
                     .append(") - ")
-                    .append(result.getResultType().getLottoMatchCount())
+                    .append(resultType.getLottoMatchCount())
                     .append("개\n");
         }
 
