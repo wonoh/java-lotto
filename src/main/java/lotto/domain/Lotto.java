@@ -23,12 +23,13 @@ public class Lotto {
                 .collect(Collectors.toList());
         return new Lotto(numbers);
     }
-    public ResultType findResultTypeByMatchCount(Lotto winningLotto,Integer bonusNumber){
+    public ResultType findResultTypeByMatchCount(WinningLotto winningLotto){
+        Lotto lotto = winningLotto.lotto();
         final int matchCount = (int) this.numbers
                             .stream()
-                            .filter(winningLotto::contains)
+                            .filter(lotto::contains)
                             .count();
-        final boolean isBonusMatch = contains(bonusNumber);
+        final boolean isBonusMatch = contains(winningLotto.getBonusNumber());
         return ResultType.findType(matchCount,isBonusMatch);
     }
     public boolean contains(Integer number){

@@ -8,10 +8,6 @@ public class LottoStore {
 
     private final List<Lotto> lottos;
 
-    public int lottoCount(){
-        return this.lottos.size();
-    }
-
     private LottoStore(List<Lotto> lottos){
         this.lottos = lottos;
     }
@@ -21,10 +17,7 @@ public class LottoStore {
     public Results createResults(WinningLotto winningLotto){
         Results results = Results.of(this);
         for (Lotto lotto : this.lottos) {
-            ResultType resultType = lotto.findResultTypeByMatchCount(
-                    winningLotto.lotto(),
-                    winningLotto.getBonusNumber()
-            );
+            ResultType resultType = lotto.findResultTypeByMatchCount(winningLotto);
             resultType.plusLottoMatchCount();
         }
         return results;
