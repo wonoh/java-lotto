@@ -1,22 +1,26 @@
 package lotto.domain.type;
 
+import java.util.Arrays;
+
 public enum ResultType {
 
-    SIX(6,2000000000),
-    FIVE_AND_BONUS(5,3000000),
-    FIVE(5,1500000),
-    FOUR(4,50000),
-    THREE(3,5000),
-    SORRY(0,0);
+    SIX(6,2000000000,false),
+    FIVE_AND_BONUS(5,3000000,true),
+    FIVE(5,1500000,false),
+    FOUR(4,50000,false),
+    THREE(3,5000,false),
+    SORRY(0,0,false);
 
     private int matchCount;
     private int winningMoney;
+    private boolean isBonusMatch;
 
     private int lottoMatchCount;
 
-    ResultType(int matchCount,int winningMoney) {
+    ResultType(int matchCount,int winningMoney,boolean isBonusMatch) {
         this.matchCount = matchCount;
         this.winningMoney = winningMoney;
+        this.isBonusMatch = isBonusMatch;
     }
     public int prize(){
         return this.lottoMatchCount * this.winningMoney;
@@ -27,17 +31,12 @@ public enum ResultType {
     }
 
     public static ResultType findType(int matchCount,boolean isBonusMatch){
-        for (ResultType resultType : values()) {
-            if(resultType.hasCount(matchCount)){
-                if(resultType.equals(FOUR) && isBonusMatch){
-                    return FIVE_AND_BONUS;
-                }
-                return resultType;
-            }
-        }
-        return SORRY;
+        return Arrays.stream(values()).
+                filter(resultType -> resultType.eqMachCount(matchCount) && resultType.isBonusMatch == isBonusMatch)
+                .findFirst()
+                .orElse(SORRY);
     }
-    public boolean hasCount(int matchCount){
+    public boolean eqMachCount(int matchCount){
         return this.matchCount == matchCount;
     }
     public void plusLottoMatchCount(){
