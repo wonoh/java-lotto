@@ -31,10 +31,13 @@ public enum ResultType {
     }
 
     public static ResultType findType(int matchCount,boolean isBonusMatch){
-        return Arrays.stream(values()).
-                filter(resultType -> resultType.eqMachCount(matchCount) && resultType.isBonusMatch == isBonusMatch)
+        return Arrays.stream(values())
+                .filter(resultType -> findMatch(resultType,matchCount,isBonusMatch))
                 .findFirst()
                 .orElse(SORRY);
+    }
+    private static boolean findMatch(ResultType resultType,int matchCount,boolean isBonusMatch){
+        return resultType.eqMachCount(matchCount) && resultType.isBonusMatch == isBonusMatch;
     }
     public boolean eqMachCount(int matchCount){
         return this.matchCount == matchCount;
