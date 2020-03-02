@@ -3,6 +3,7 @@ package lotto.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,17 +19,26 @@ public class LottoGenerator {
         lottoNumberPoll = initNumbers();
     }
 
-    public static LottoStore generateLottoStore(Money money){
-        List<Lotto> lottoNumbers = IntStream.range(0, money.lottoCount())
+    public static LottoStore generateLottoStore(Money money,List<String> inputManualLotts){
+        List<Lotto> manualLottos = createManualLottos(inputManualLotts);
+        int autoLottoCount = money.lottoCount() - manualLottos.size();
+        List<Lotto> autoLottos = IntStream.range(0, autoLottoCount)
                                     .mapToObj(i -> generateLotto())
                                     .collect(Collectors.toList());
-        return LottoStore.of(lottoNumbers);
+        return LottoStore.of(autoLottos,manualLottos);
+    }
+    private static List<Lotto> createManualLottos(List<String> inputManualLotts){
+        return inputManualLotts.stream()
+                .map(Lotto::of)
+                .collect(Collectors.toList());
     }
     private static Lotto generateLotto(){
         final List<Integer> newNumbers = new ArrayList<>(lottoNumberPoll);
         Collections.shuffle(newNumbers);
-        final List<Integer> lottoNumbers = pickLottoNumbers(newNumbers);
-        Collections.sort(lottoNumbers);
+        final List<Integer> pickNumbers = pickLottoNumbers(newNumbers);
+        List<LottoNumber> lottoNumbers = pickNumbers.stream()
+                                        .map(LottoNumber::of)
+                                        .collect(Collectors.toList());
         return Lotto.of(lottoNumbers);
     }
     private static List<Integer> pickLottoNumbers(List<Integer> initNumbers){

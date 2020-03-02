@@ -7,8 +7,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,16 +19,22 @@ class LottoTest {
 
     private static Stream<Arguments> lottoProvider(){
         return Stream.of(
-                Arguments.of(Arrays.asList(2,32,14,6,23,7)),
-                Arguments.of(Arrays.asList(5,4,20,32,19,13)),
-                Arguments.of(Arrays.asList(2,32,14,6,23,1))
+                Arguments.of(Stream.of(2,32,14,6,23,7)
+                        .map(LottoNumber::of)
+                        .collect(Collectors.toList())),
+                Arguments.of(Stream.of(2,1,5,8,15,7)
+                        .map(LottoNumber::of)
+                        .collect(Collectors.toList())),
+                Arguments.of(Stream.of(1,32,16,23,20,21)
+                        .map(LottoNumber::of)
+                        .collect(Collectors.toList()))
         );
     }
 
-    @DisplayName("6개의 숫자가 담긴 리스트로 Lotto 도메인을 생성한다.")
+    @DisplayName("LottoNumber 로 Lotto 도메인을 생성한다.")
     @MethodSource(value = "lottoProvider")
     @ParameterizedTest
-    void Lotto_of(List<Integer> numbers) {
+    void Lotto_of(List<LottoNumber> numbers) {
         Lotto lotto = Lotto.of(numbers);
         assertNotNull(lotto);
         assertEquals(numbers,lotto.getNumbers());
@@ -42,7 +48,10 @@ class LottoTest {
         for (String s : split) {
             numbers.add(Integer.parseInt(s.trim()));
         }
-        Lotto lotto = Lotto.of(numbers);
+        List<LottoNumber> lottoNumbers = numbers.stream()
+                .map(LottoNumber::of)
+                .collect(Collectors.toList());
+        Lotto lotto = Lotto.of(lottoNumbers);
         assertNotNull(lotto);
     }
 }

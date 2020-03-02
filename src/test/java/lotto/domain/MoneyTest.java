@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +25,7 @@ class MoneyTest {
     @ValueSource(strings = {"1,2,3,4,5,6","3,5,6,7,8,9"})
     void Money_of(String inputNumbers) {
         Lotto lotto = Lotto.of(inputNumbers);
-        LottoStore lottoStore = LottoStore.of(Collections.singletonList(lotto));
+        LottoStore lottoStore = LottoStore.of(Collections.singletonList(lotto),new ArrayList<>());
         Money money = Money.of(lottoStore.getLottos());
         assertNotNull(money);
         assertEquals(1000,money.getMoney());

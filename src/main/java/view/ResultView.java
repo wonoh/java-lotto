@@ -12,7 +12,10 @@ public class ResultView {
 
     public static void printLotto(LottoStore lottoStore) {
         List<Lotto> lottos = lottoStore.getLottos();
-        System.out.println(lottos.size()+"개를 구매했습니다.");
+        int manualLottoCount = lottoStore.getManualLottoCount();
+        int autoLottoCount = lottos.size() - manualLottoCount;
+        System.out.println("수동으로 "+manualLottoCount+"장"
+                +", 자동으로 "+autoLottoCount+"개를 구매했습니다.");
         for (Lotto lotto : lottos) {
             System.out.println(lotto.getNumbers());
         }

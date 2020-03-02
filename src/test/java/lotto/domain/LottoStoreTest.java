@@ -25,16 +25,16 @@ class LottoStoreTest {
     }
     private static Stream<Arguments> winningLottoProvider(){
         return Stream.of(
-                Arguments.of("1,2,3,4,5,6","8"),
-                Arguments.of("1,2,3,4,5,6","9"),
-                Arguments.of("1,2,3,4,5,6","10")
+                Arguments.of("1,2,3,4,5,6",8),
+                Arguments.of("1,2,3,4,5,6",9),
+                Arguments.of("1,2,3,4,5,6",10)
         );
     }
 
     @DisplayName("지난주 당첨로또로 결과를 생성한다.")
     @ParameterizedTest
     @MethodSource(value = "winningLottoProvider")
-    void createResults(String inputNumbers,String bonusNumber) {
+    void createResults(String inputNumbers,int bonusNumber) {
         LottoStore lottoStore = createLottoStore(inputNumbers);
         WinningLotto winningLotto = WinningLotto.of(inputNumbers,bonusNumber);
         Results results = lottoStore.createResults(winningLotto);
@@ -43,7 +43,7 @@ class LottoStoreTest {
     public static LottoStore createLottoStore(String inputNumbers){
         List<Lotto> lottos = new ArrayList<>();
         lottos.add(Lotto.of(inputNumbers));
-        return LottoStore.of(lottos);
+        return LottoStore.of(lottos,new ArrayList<>());
     }
 
 }

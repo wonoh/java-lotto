@@ -5,19 +5,25 @@ import lotto.domain.type.ResultType;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-
-import static lotto.domain.constant.LottoConstants.LOTTO_SIZE;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class LottoStore {
 
     private final List<Lotto> lottos;
+    private int manualLottoCount;
 
-    private LottoStore(List<Lotto> lottos){
-        validateLottos(lottos);
-        this.lottos = lottos;
+    private LottoStore(List<Lotto> autoLottos,List<Lotto> manualLotts ){
+        validateLottos(autoLottos);
+        validateLottos(manualLotts);
+        this.lottos = Stream.concat(
+                                manualLotts.stream(),
+                                autoLottos.stream())
+                        .collect(Collectors.toList());
+        this.manualLottoCount = manualLotts.size();
     }
-    public static LottoStore of(List<Lotto> lottos){
-        return new LottoStore(lottos);
+    public static LottoStore of(List<Lotto> autoLottos,List<Lotto> manualLotts){
+        return new LottoStore(autoLottos,manualLotts);
     }
     public Results createResults(WinningLotto winningLotto){
         Results results = Results.of(this);
@@ -34,5 +40,9 @@ public class LottoStore {
     }
     public List<Lotto> getLottos() {
         return Collections.unmodifiableList(lottos);
+    }
+
+    public int getManualLottoCount() {
+        return manualLottoCount;
     }
 }
