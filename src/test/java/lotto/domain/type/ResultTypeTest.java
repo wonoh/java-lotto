@@ -35,7 +35,7 @@ class ResultTypeTest {
     @ValueSource(ints = {3,4,5})
     void findType(int matchCount) {
         ResultType resultType = Arrays.stream(ResultType.values())
-                .filter(r -> r.hasCount(matchCount))
+                .filter(r -> r.eqMachCount(matchCount))
                 .findFirst()
                 .orElse(ResultType.SORRY);
         assertNotNull(resultType);

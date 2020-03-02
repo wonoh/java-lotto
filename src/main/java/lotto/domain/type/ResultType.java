@@ -37,7 +37,10 @@ public enum ResultType {
                 .orElse(SORRY);
     }
     private static boolean findMatch(ResultType resultType,int matchCount,boolean isBonusMatch){
-        return resultType.eqMachCount(matchCount) && resultType.isBonusMatch == isBonusMatch;
+        if(matchCount == FIVE_AND_BONUS.matchCount){
+            return resultType.eqMachCount(matchCount) && resultType.isBonusMatch == isBonusMatch;
+        }
+        return resultType.eqMachCount(matchCount);
     }
     public boolean eqMachCount(int matchCount){
         return this.matchCount == matchCount;
