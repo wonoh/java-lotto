@@ -6,16 +6,15 @@ public class WinningLotto {
     private LottoNumber bonusNumber;
 
     private WinningLotto(Lotto lotto,LottoNumber bonusNumber){
+
+        validateDuplication(bonusNumber);
         this.lotto = lotto;
-        validateBonusNumber(bonusNumber);
         this.bonusNumber = bonusNumber;
     }
     public static WinningLotto of(String inputNumbers,int bonusNumber){
         LottoNumber bonusLottoNumber = LottoNumber.of(bonusNumber);
-        return new WinningLotto(
-                Lotto.of(inputNumbers),
-                bonusLottoNumber
-        );
+        Lotto lotto = Lotto.of(inputNumbers);
+        return new WinningLotto(lotto, bonusLottoNumber);
     }
     public LottoNumber getBonusNumber() {
         return bonusNumber;
@@ -23,7 +22,7 @@ public class WinningLotto {
     public Lotto lotto() {
         return lotto;
     }
-    private void validateBonusNumber(LottoNumber bonusNumber){
+    private void validateDuplication(LottoNumber bonusNumber){
         if(this.lotto.contains(bonusNumber)){
             throw new IllegalArgumentException(bonusNumber+"는 중복된 번호입니다.");
         }

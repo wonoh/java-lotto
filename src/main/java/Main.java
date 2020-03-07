@@ -11,11 +11,7 @@ public class Main {
 
         Money money = Money.of(InputView.inputMoney());
         int manualLottoCount = InputView.inputManualLottoCount();
-        List<String> inputManualLotts = new ArrayList<>();
-
-        if(manualLottoCount > 0){
-            inputManualLotts = InputView.inputManualLottoNumbers(manualLottoCount);
-        }
+        List<String> inputManualLotts = InputView.inputManualLottoNumbers(manualLottoCount);
 
         LottoStore lottoStore = LottoGenerator.generateLottoStore(money,inputManualLotts);
         ResultView.printLotto(lottoStore);

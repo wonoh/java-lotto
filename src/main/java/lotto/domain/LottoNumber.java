@@ -19,7 +19,7 @@ public class LottoNumber implements Comparable<LottoNumber> {
 
     private void validateNumber(int number) {
         if(number < LOTTO_START_NUMBER || number > LOTTO_END_NUMBER){
-            throw new IllegalArgumentException("로또 숫자는 1~45의 범위여야 합니다.");
+            throw new IllegalArgumentException("로또 숫자는"+LOTTO_START_NUMBER+"~"+LOTTO_END_NUMBER+"의 범위여야 합니다.");
         }
     }
     @Override
