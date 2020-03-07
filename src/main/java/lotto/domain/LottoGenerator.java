@@ -18,16 +18,16 @@ public class LottoGenerator {
         lottoNumberPool = initNumbers();
     }
 
-    public static LottoStore generateLottoStore(Money money,List<String> inputManualLotts){
-        List<Lotto> manualLottos = createManualLottos(inputManualLotts);
+    public static LottoStore generateLottoStore(Money money,List<String> inputManualLottos){
+        List<Lotto> manualLottos = createManualLottos(inputManualLottos);
         int autoLottoCount = money.lottoCount() - manualLottos.size();
         List<Lotto> autoLottos = IntStream.range(0, autoLottoCount)
                                     .mapToObj(i -> generateLotto())
                                     .collect(Collectors.toList());
         return LottoStore.of(autoLottos,manualLottos);
     }
-    private static List<Lotto> createManualLottos(List<String> inputManualLotts){
-        return inputManualLotts.stream()
+    private static List<Lotto> createManualLottos(List<String> inputManualLottos){
+        return inputManualLottos.stream()
                 .map(Lotto::of)
                 .collect(Collectors.toList());
     }
