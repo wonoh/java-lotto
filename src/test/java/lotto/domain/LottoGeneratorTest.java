@@ -23,7 +23,7 @@ class LottoGeneratorTest {
     @ValueSource(ints = {1000,2000,3000,5000})
     void 금액만큼_로또_생성(int inputMoney){
         Money money = Money.of(inputMoney);
-        LottoStore lottoStore = LottoGenerator.generateLottoStore(money,new ArrayList<>());
+        LottoStore lottoStore = LottoGenerator.generateLottoStore(money,Collections.emptyList());
 
         int expectedCount = money.lottoCount();
         assertEquals(expectedCount,lottoStore.getLottos().size());
@@ -33,7 +33,7 @@ class LottoGeneratorTest {
     @ValueSource(ints = {1000,2000,3000,5000})
     void 로또_숫자개수_6개(int inputMoney){
         Money money = Money.of(inputMoney);
-        LottoStore lottoStore = LottoGenerator.generateLottoStore(money,new ArrayList<>());
+        LottoStore lottoStore = LottoGenerator.generateLottoStore(money,Collections.emptyList());
 
         int expectedCount = 6;
         for (Lotto lotto : lottoStore.getLottos()) {
