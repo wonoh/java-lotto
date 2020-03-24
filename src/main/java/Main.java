@@ -1,6 +1,6 @@
 import lotto.domain.*;
+import lotto.web.CustomTemplateEngine;
 import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.StringUtils;
 
 import java.util.*;
@@ -9,11 +9,12 @@ import static spark.Spark.*;
 
 public class Main {
     private static LottoStore lottoStore;
+    private static final String staticFileLocation = "/templates";
     public static String render(Map<String,Object> model,String templatePath){
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model,templatePath));
+        return new CustomTemplateEngine(staticFileLocation).render(new ModelAndView(model,templatePath));
     }
     public static void main(String[] args){
-        staticFiles.location("/templates/");
+        staticFiles.location(staticFileLocation);
         port(8080);
 
         get("/", (req, res) -> "index");
