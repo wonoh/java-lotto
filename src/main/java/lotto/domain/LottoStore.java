@@ -11,9 +11,14 @@ import java.util.stream.Stream;
 public class LottoStore {
 
     private final List<Lotto> lottos;
+    private int size;
     private int manualLottoCount;
 
-    private LottoStore(List<Lotto> autoLottos,List<Lotto> manualLotts ){
+    public int getSize() {
+        return this.lottos.size();
+    }
+
+    private LottoStore(List<Lotto> autoLottos, List<Lotto> manualLotts ){
         validateLottos(autoLottos);
         validateLottos(manualLotts);
         this.lottos = Stream.concat(

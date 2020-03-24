@@ -7,8 +7,8 @@ public class WinningLotto {
 
     private WinningLotto(Lotto lotto,LottoNumber bonusNumber){
 
-        validateDuplication(bonusNumber);
         this.lotto = lotto;
+        validateDuplication(bonusNumber);
         this.bonusNumber = bonusNumber;
     }
     public static WinningLotto of(String inputNumbers,int bonusNumber){
