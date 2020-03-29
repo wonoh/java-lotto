@@ -17,7 +17,11 @@ public enum ResultType {
 
     private int lottoMatchCount;
 
-    ResultType(int matchCount,int winningMoney,boolean isBonusMatch) {
+    public boolean isBonusMatch() {
+        return isBonusMatch;
+    }
+
+    ResultType(int matchCount, int winningMoney, boolean isBonusMatch) {
         this.matchCount = matchCount;
         this.winningMoney = winningMoney;
         this.isBonusMatch = isBonusMatch;

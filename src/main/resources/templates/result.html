@@ -74,7 +74,7 @@ body {
 		<tbody>
 			{{#each results}}
 		<tr>
-			<td>{{this.resultType.matchCount}} 개 일치 ({{this.resultType.winningMoney}}) - {{this.resultType.lottoMatchCount}} 개
+			<td>{{this.resultType.matchCount}} 개 일치 ({{this.resultType.winningMoney}}) {{#if this.bonusMatch}} 보너스볼 일치 {{/if}} - {{this.resultType.lottoMatchCount}} 개
 			</td>
 		</tr>
 		{{/each}}

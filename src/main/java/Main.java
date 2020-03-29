@@ -8,36 +8,44 @@ import java.util.*;
 import static spark.Spark.*;
 
 public class Main {
-    private static LottoStore lottoStore;
-    private static final String staticFileLocation = "/templates";
+
+    private static final String STATIC_FILE_LOCATION = "/templates";
     public static String render(Map<String,Object> model,String templatePath){
-        return new CustomTemplateEngine(staticFileLocation).render(new ModelAndView(model,templatePath));
+        return new CustomTemplateEngine(STATIC_FILE_LOCATION).render(new ModelAndView(model,templatePath));
     }
     public static void main(String[] args){
-        staticFiles.location(staticFileLocation);
+        staticFiles.location(STATIC_FILE_LOCATION);
         port(8080);
 
         get("/", (req, res) -> "index");
         post("/buyLotto",(req,res) ->{
-            Map<String,Object> model = new HashMap<>();
             final int inputMoney = Integer.parseInt(req.queryParams("inputMoney"));
             Money money = Money.of(inputMoney);
+
             final String manualNumber = req.queryParams("manualNumber");
-            System.out.println(manualNumber);
             List<String> inputManualLottos = new ArrayList<>();
             if(!StringUtils.isEmpty(manualNumber)){
                 Collections.addAll(inputManualLottos, manualNumber.split("\n"));
             }
-            lottoStore = LottoGenerator.generateLottoStore(money,inputManualLottos);
+
+            LottoStore lottoStore = LottoGenerator.generateLottoStore(money,inputManualLottos);
+
+            req.session().attribute("lottoStore",lottoStore);
+
+            Map<String,Object> model = new HashMap<>();
             model.put("lottoStore",lottoStore);
             return render(model,"show.html");
         });
         post("/matchLotto",(req,res) ->{
-            Map<String,Object> model = new HashMap<>();
             final String winningNumber = req.queryParams("winningNumber");
             final int bonusNumber = Integer.parseInt(req.queryParams("bonusNumber"));
             WinningLotto winningLotto = WinningLotto.of(winningNumber,bonusNumber);
+
+            LottoStore lottoStore = req.session().attribute("lottoStore");
+
             Results results = lottoStore.createResults(winningLotto);
+
+            Map<String,Object> model = new HashMap<>();
             model.put("results",results.getResults());
             model.put("yield",results.getYield());
             return render(model,"result.html");

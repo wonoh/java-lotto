@@ -16,6 +16,9 @@ public class Result {
     public int getPrize(){
         return resultType.prize();
     }
+    public boolean isBonusMatch(){
+        return resultType.isBonusMatch();
+    }
 
     public ResultType getResultType() {
         return resultType;
